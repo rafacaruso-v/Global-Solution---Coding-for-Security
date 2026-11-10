@@ -1,0 +1,9 @@
+# Variáveis de ambiente e segredos
+.env
+
+# Cache do Python
+__pycache__/
+
+# Logs e arquivos temporários da aplicação
+*.log
+logs/
