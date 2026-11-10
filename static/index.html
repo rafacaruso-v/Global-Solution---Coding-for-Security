@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AlertaChuva SP</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topo">
+    <h1>AlertaChuva SP</h1>
+    <p>Veja se vai chover forte perto de casa e receba o aviso antes de a água subir.</p>
+  </header>
+
+  <main class="grade">
+    <section class="coluna" aria-labelledby="t-risco">
+      <h2 id="t-risco">Risco de chuva forte nas próximas 24 horas</h2>
+      <label for="area-risco">Escolha sua região</label>
+      <select id="area-risco" class="area-select"></select>
+
+      <div id="painel-risco" class="risco" aria-live="polite">
+        <p class="risco-rotulo">Risco agora</p>
+        <p id="nivel-texto" class="risco-nivel">–</p>
+        <p id="risco-msg" class="risco-msg">Escolha uma região para ver a previsão.</p>
+        <dl class="medidas">
+          <div><dt>Chuva em 24 h</dt><dd id="chuva-total">–</dd></div>
+          <div><dt>Pico em 1 hora</dt><dd id="chuva-pico">–</dd></div>
+        </dl>
+      </div>
+      <ol class="escala" aria-label="Escala de risco">
+        <li data-nivel="baixo">Baixo</li>
+        <li data-nivel="atencao">Atenção</li>
+        <li data-nivel="alerta">Alerta</li>
+        <li data-nivel="critico">Crítico</li>
+      </ol>
+      <p class="nota">Previsão da Open-Meteo. Protótipo acadêmico: não substitui os alertas
+        oficiais da Defesa Civil (199).</p>
+    </section>
+
+    <section class="coluna" aria-labelledby="t-form">
+      <h2 id="t-form">Receber alertas</h2>
+      <form id="form-inscricao" novalidate>
+        <label for="apelido">Como podemos chamar você?</label>
+        <input id="apelido" name="apelido" type="text" maxlength="40" autocomplete="off" required>
+
+        <label for="area-form">Região onde você mora ou trabalha</label>
+        <select id="area-form" class="area-select" required></select>
+
+        <label for="nivel">Avisar a partir de qual nível</label>
+        <select id="nivel">
+          <option value="atencao">Atenção</option>
+          <option value="alerta">Alerta</option>
+          <option value="critico">Crítico</option>
+        </select>
+
+        <label class="consentimento" id="bloco-consentimento">
+          <input id="consentimento" type="checkbox">
+          <span>Autorizo o uso do meu apelido e da minha região apenas para enviar alertas de chuva.
+            Posso cancelar quando quiser.</span>
+        </label>
+
+        <div class="acoes">
+          <button id="btn-salvar" type="submit">Receber alertas</button>
+          <button id="btn-cancelar" type="button" class="perigo" hidden>Cancelar inscrição</button>
+        </div>
+        <p id="form-msg" class="msg" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <details class="operador">
+    <summary>Painel do operador (Defesa Civil / associação de moradores)</summary>
+    <div class="operador-corpo">
+      <label for="chave">Chave de operador</label>
+      <input id="chave" type="password" autocomplete="off">
+
+      <div class="acoes">
+        <button id="btn-listar" type="button">Ver inscritos</button>
+      </div>
+
+      <label for="area-op">Área do alerta</label>
+      <select id="area-op" class="area-select"></select>
+      <label for="simulacao">Fonte do nível</label>
+      <select id="simulacao">
+        <option value="">Previsão real (Open-Meteo)</option>
+        <option value="atencao">Simular nível Atenção</option>
+        <option value="alerta">Simular nível Alerta</option>
+        <option value="critico">Simular nível Crítico</option>
+      </select>
+      <div class="acoes">
+        <button id="btn-disparar" type="button">Enviar alerta por UDP</button>
+      </div>
+      <p id="op-msg" class="msg" role="status"></p>
+
+      <div class="tabela-rolagem">
+        <table id="tabela-inscritos" hidden>
+          <thead><tr><th>ID</th><th>Apelido</th><th>Área</th><th>A partir de</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </details>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
